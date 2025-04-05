@@ -1,254 +1,130 @@
-@import 'animations.css';
-@import 'layout.css';
+@import 'open-props/normalize.min.css';
 @import 'remixicon.css';
-@import 'nav.css';
 @import 'miniPlayer.css';
-@import 'home.css';
-@import 'search.css';
-@import 'library.css';
-@import 'list.css';
-@import 'snackbar.css';
-/* @import 'open-props/normalize.min.css';*/
-
+@import 'header.css';
+@import '../plugins/Search.css';
+@import '../core/Upcoming.css';
+@import '../core/Library.css';
 
 :root {
-  --bg: transparent;
-  --onBg: transparent;
-  --text: black;
-  --borderColor: transparent;
-  --border: 0.1vmin solid var(--borderColor);
-  --shadowColor: transparent;
-  --shadow: 0 0.5vmin 1.5vmin var(--shadowColor);
-  --roundness: 0.4rem;
-  --defaultBg: var(--text);
-  --defaultText: var(--bg);
-  --pageTransitionEffect: translateX(100%);
+  --border: var(--border-size-1) solid var(--accent);
+  --text: #000a;
+  --bg: aliceblue;
+  --onBg: #fff7;
+  --accent: #000;
+  --radius: var(--radius-2);
+  background-color: var(--bg);
 }
 
-@font-face {
-  font-family: "Noto Sans";
-  src: url("/NotoSans.woff2") format("woff2");
-  font-display: swap;
+html,
+body {
+  height: 100dvh;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+body {
+  font-family: var(--font-system-ui);
+  -webkit-font-smoothing: antialiased;
 }
 
-* {
-  margin: 0;
+/*
+.immersive {
+  background-image: linear-gradient(var(--bgLight), var(--bg));
+  background-size: cover;
+  background-position: center;
+
+section {
+  backdrop-filter: blur(0.5rem);
 }
-
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
 }
+*/
 
-input,
-button,
-select {
-  font: inherit;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-}
-
-
-button {
-  background: none;
-  border: none;
-  transition: all 0.3s ease;
-  user-select: none;
-
-  &:active {
-    transform: scale(0.8);
-  }
-}
-
-
-input {
-  font-family: inherit;
-  outline: none;
-}
-
-select {
-  font-family: inherit;
-  background: none;
-  outline: none;
-  color: var(--text);
-  border: none;
-  border-radius: var(--roundness);
-
-  /* fix white on white issue on dark mode */
-  option,
-  optgroup {
-    background: var(--bg);
-  }
-}
-
-dialog[open] {
-  margin: auto;
-  background: none;
-  border: none;
-  animation: boing 0.3s ease-in-out forwards;
-}
-
-
-dialog::backdrop {
-  animation: dialogAppear 0.3s ease-in-out forwards;
-  background-color: #0007;
-}
-
-
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-
-.hide {
-  display: none !important;
-}
-
-.delete {
-  --defaultBg: #800;
-  --defaultText: #eaa;
-  --onBg: #800;
-  --text: #eaa;
-}
-
-.filter_lt10 {
-  --defaultBg: #055;
-  --defaultText: #6dd;
-}
-
-.checked {
-  --defaultBg: #505;
-  --defaultText: #faf;
-}
-
-.redup {
-  --defaultBg: #550;
-  --defaultText: #ffa;
-}
-
-
-
-#queuetools,
-#listTools,
-#settings,
-#changelog {
-  button {
-    border: var(--border);
-    border-radius: var(--roundness);
-    background: var(--defaultBg);
-    color: var(--defaultText);
-    font-family: inherit;
-    font-size: inherit;
-    padding: 1vmin 2vmin;
-    margin: 1vmin 2vmin;
-  }
-}
-
-
-.ri-loader-3-line {
-  animation: spinner 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
-}
-
-#loadingScreen {
+main {
   background-color: var(--bg);
   color: var(--text);
-  border-radius: var(--roundness);
+  display: flex;
+  height: 100%;
+  user-select: none;
 
-  i {
-    display: block;
-    font-size: xx-large;
-  }
-
-}
-
-
-
-dialog.displayer {
-  white-space: pre;
-  background: var(--bg);
-  color: var(--text);
-  border-radius: var(--roundness);
 
   section {
-    white-space: normal;
-    overflow: scroll;
+    height: 100%;
+    flex: 1 0 0;
+    padding: var(--size-3);
+    overflow-y: scroll;
+  }
 
-    p {
-      margin-bottom: 1rem;
-      transition: all 0.5s;
-      font-size: small;
+  @media (orientation: portrait) {
+    overflow-x: scroll;
+    flex-direction: row;
+    scroll-snap-type: x mandatory;
+
+    section {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+    }
+  }
+}
+
+nav {
+  width: 100%;
+  overflow: scroll;
+  margin-top: var(--size-3);
+
+  input[type='radio'] {
+    display: none;
+
+    &:checked+label {
+      font-weight: bolder;
+      opacity: 1;
     }
 
-    p.active {
-      font-size: large;
-      font-weight: bold;
+    &+label {
+      display: inline-block;
+      margin-right: var(--size-3);
+      padding: 0;
+      list-style: none;
+      opacity: 0.75;
     }
+
   }
 
 }
 
-dialog.watcher {
+
+.emptyStateComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--onBg);
+  border-radius: var(--radius);
+  width: 100%;
+  aspect-ratio: 4/3;
+  margin-top: var(--size-3);
+
+  i {
+    font-size: var(--size-7);
+  }
+
+  p {
+    font-style: italic;
+  }
+}
+
+
+dialog {
   height: 100dvh;
   width: 100dvw;
-  background: var(--bg);
-  color: var(--text);
+  border-radius: 0;
+  background: blue;
+  box-shadow: none;
 
-  button {
-    color: inherit;
+  @media(orientation:landscape) {
+    width: calc(100dvw / 1.5);
+    margin-left: calc(100dvw / 3);
   }
 
-  video {
-    width: 100%;
-    max-width: 100vmin;
-    border-radius: var(--roundness);
+  &::backdrop {
+    background: red;
   }
-
-  select {
-    width: 7ch;
-    margin-left: 1ch;
-  }
-}
-
-
-#queuetools,
-#listTools {
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  backdrop-filter: blur(0.5rem);
-  border-bottom-left-radius: var(--roundness);
-  border-bottom-right-radius: var(--roundness);
-  padding: 2vmin 0;
-  width: calc(92% + 3vmin);
-  
-  button::after {
-    content: attr(aria-label);
-  }
-}
-
-#queuelist {
-  width: 92%;
-}
-
-/* disable action during load events */
-#playButton.ri-loader-3-line {
-  pointer-events: none;
 }

@@ -2,10 +2,8 @@
 	width: 100%;
 	user-select: none;
 	background-color: var(--onBg);
-	padding: 1dvmin;
-	margin-bottom: 2dvmin;
-	border: var(--border);
-	border-radius: calc(var(--roundness) + 0.75vmin);
+	padding: var(--size-1);
+	margin-bottom: var(--size-1);
 	display: flex;
 	align-items: center;
 	position: relative;
@@ -55,26 +53,27 @@
 	}
 
 	div {
-		height: 19.5vmin;
 		width: calc(100% - 37vmin);
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
 
 		.title {
-			max-height: 10vmin;
 			line-height: 5vmin;
-			font-size: 100%;
+			font-size: var(--size-3);
 			overflow: hidden;
 		}
 
 		.avu {
-			height: 9.5vmin;
 			overflow: hidden;
-			line-height: 4.75vmin;
+			line-height: var(--size-3);
 			width: 100%;
-			font-size: small;
 			opacity: 0.8;
+
+			p {
+				font-size: var(--size-3);
+
+			}
 
 			@media(orientation:landscape) {
 				display: flex;

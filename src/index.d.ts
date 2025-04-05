@@ -1,3 +1,4 @@
+import type { JSXElement } from 'solid-js';
 import type en from './locales/en.json';
 
 declare global {
@@ -100,7 +101,6 @@ declare global {
   type Piped = {
     instance: string,
     title: string,
-    uploader: string,
     duration: number,
     uploader: string,
     uploaderUrl: string,
@@ -142,7 +142,8 @@ declare global {
     id: string
   }
   interface WindowEventMap {
-    'dbchange': CustomEvent<{ db: Library, change: string }>;
+    'dbchange': CustomEvent<{ db: Library, change: string }>,
+    'translationsLoaded': CustomEvent<Record<TranslationKeys, string>>
   }
 
 }

@@ -23,7 +23,7 @@ function close() {
 actionsMenu.onclick = close;
 
 const WatchVideo = lazy(() => import('./WatchVideo'));
-const Lyrics = lazy(() => import('./Lyrics.tsx'));
+const Lyrics = lazy(() => import('./Lyrics'));
 
 export default function() {
 

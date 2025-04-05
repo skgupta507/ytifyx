@@ -41,8 +41,8 @@ export const i18n = (
   key: TranslationKeys,
   value: string = ''
 ) => value ?
-    (json?.[key] || key).replace('$', value) :
-    json?.[key] || key;
+    (<string>(json?.[key] || key)).replace('$', value) :
+    <string>(json?.[key] || key) as string;
 
 export function proxyHandler(url: string) {
   store.api.index = 0;

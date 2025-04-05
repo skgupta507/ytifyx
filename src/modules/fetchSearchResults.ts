@@ -46,7 +46,7 @@ export const fetchWithInvidious = (
     .then(items => {
       if (!items || !items.length)
         throw new Error("No Items Found");
-      
+
       itemsLoader(
         items.filter(
           (item: StreamItem) => (item.lengthSeconds > 62) && (item.viewCount > 1000)
@@ -66,7 +66,7 @@ const loadMoreResults = (
     .then(res => res.json())
     .catch(x => console.log('e:' + x))
 
-const fetchWithPiped = (
+export const fetchWithPiped = (
   API: string,
   query: string
 ) => fetch(API + '/' + query)

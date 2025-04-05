@@ -11,24 +11,22 @@ const attributes = [
   '-placeholder'
 ];
 
-let json: Record<TranslationKeys, string> | undefined;
+let translations: Record<TranslationKeys, string>;
 
 import(`../locales/${locale}.json`)
-  .then(_ => {
-    json = _.default;
+  .then((_) => {
+    translations = _.default;
     attributes.forEach(attributeHandler);
+    dispatchEvent(new CustomEvent('i18nLoaded'));
   });
 
+
 function attributeHandler(attr: string) {
-
   const query = 'data-translation' + attr;
-
-  document.querySelectorAll(`[${query}]`).forEach(el => {
+  document.querySelectorAll(`[${query}]`).forEach((el) => {
     const translationKey = el.getAttribute(query) as TranslationKeys;
-
-    if (!translationKey || !json) return;
-
-    const translationVal = json[translationKey] || translationKey;
+    if (!translationKey || !translations) return;
+    const translationVal = translations[translationKey] || translationKey;
 
     if (attr) {
       el.removeAttribute(query);
@@ -36,10 +34,14 @@ function attributeHandler(attr: string) {
         attr.substring(1),
         translationVal
       );
-    }
-    else el.textContent = translationVal;
+    } else el.textContent = translationVal;
   });
 }
 
-export { json };
 
+export const i18n = (
+  key: TranslationKeys,
+  value: string = ''
+) => value ?
+    ((translations?.[key] || key) as string).replace('$', value) :
+    (translations?.[key] || key) as string;
